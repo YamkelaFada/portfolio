@@ -1,0 +1,1336 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yamkela Qwebani — Junior Full-Stack Developer</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #0e0e0e;
+        --paper: #f5f0e8;
+        --accent: #c8473a;
+        --accent2: #2d6a4f;
+        --muted: #7a7469;
+        --line: rgba(14, 14, 14, 0.12);
+        --card-bg: #ffffff;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--paper);
+        color: var(--ink);
+        overflow-x: hidden;
+      }
+
+      /* NOISE TEXTURE OVERLAY */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 9999;
+        opacity: 0.4;
+      }
+
+      /* NAV */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.2rem 4rem;
+        background: var(--paper);
+        border-bottom: 1px solid var(--line);
+        backdrop-filter: blur(8px);
+      }
+
+      .nav-logo {
+        font-family: "Playfair Display", serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2.5rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--muted);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+
+      .nav-links a:hover {
+        color: var(--accent);
+      }
+
+      /* HERO */
+      .hero {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        padding-top: 5rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-text {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 6rem 4rem 4rem 4rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .hero-eyebrow {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 1.5rem;
+        opacity: 0;
+        animation: fadeUp 0.8s 0.2s forwards;
+      }
+
+      .hero-name {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(3.5rem, 6vw, 6rem);
+        font-weight: 900;
+        line-height: 1;
+        margin-bottom: 0.5rem;
+        opacity: 0;
+        animation: fadeUp 0.8s 0.4s forwards;
+      }
+
+      .hero-name em {
+        font-style: italic;
+        color: var(--accent);
+      }
+
+      .hero-title {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(1.1rem, 2vw, 1.6rem);
+        font-weight: 400;
+        font-style: italic;
+        color: var(--muted);
+        margin-bottom: 2rem;
+        opacity: 0;
+        animation: fadeUp 0.8s 0.55s forwards;
+      }
+
+      .hero-bio {
+        font-size: 0.97rem;
+        line-height: 1.75;
+        color: #444;
+        max-width: 480px;
+        margin-bottom: 2.5rem;
+        opacity: 0;
+        animation: fadeUp 0.8s 0.7s forwards;
+      }
+
+      .hero-cta {
+        display: flex;
+        gap: 1rem;
+        opacity: 0;
+        animation: fadeUp 0.8s 0.85s forwards;
+      }
+
+      .btn-primary {
+        background: var(--ink);
+        color: var(--paper);
+        padding: 0.85rem 2rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        text-decoration: none;
+        border: 2px solid var(--ink);
+        transition: all 0.25s;
+      }
+
+      .btn-primary:hover {
+        background: var(--accent);
+        border-color: var(--accent);
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: var(--ink);
+        padding: 0.85rem 2rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        text-decoration: none;
+        border: 2px solid var(--ink);
+        transition: all 0.25s;
+      }
+
+      .btn-secondary:hover {
+        background: var(--ink);
+        color: var(--paper);
+      }
+
+      .hero-image-col {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-image-col::before {
+        content: "";
+        position: absolute;
+        top: 5rem;
+        left: -2rem;
+        width: 80%;
+        height: 80%;
+        background: var(--accent2);
+        opacity: 0.08;
+        border-radius: 50% 30% 60% 40%;
+        animation: blobFloat 8s ease-in-out infinite;
+      }
+
+      @keyframes blobFloat {
+        0%,
+        100% {
+          transform: translateY(0) scale(1);
+        }
+        50% {
+          transform: translateY(-20px) scale(1.03);
+        }
+      }
+
+      .hero-photo-wrap {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 88%;
+        height: 92%;
+        opacity: 0;
+        animation: fadeIn 1s 1s forwards;
+      }
+
+      .hero-photo-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+        filter: grayscale(15%);
+      }
+
+      .hero-photo-frame {
+        position: absolute;
+        top: 4rem;
+        left: -1.5rem;
+        width: 100%;
+        height: 100%;
+        border: 2px solid var(--accent);
+        pointer-events: none;
+        opacity: 0;
+        animation: fadeIn 0.8s 1.3s forwards;
+      }
+
+      /* DECORATIVE ELEMENTS */
+      .hero-deco-line {
+        position: absolute;
+        bottom: 3rem;
+        left: 4rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        opacity: 0;
+        animation: fadeUp 0.8s 1.2s forwards;
+      }
+
+      .hero-deco-line span {
+        font-family: "DM Mono", monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .hero-deco-line::before {
+        content: "";
+        display: block;
+        width: 40px;
+        height: 1px;
+        background: var(--muted);
+      }
+
+      /* SECTION COMMON */
+      section {
+        padding: 6rem 4rem;
+      }
+
+      .section-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 0.75rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .section-label::after {
+        content: "";
+        display: block;
+        flex: 1;
+        max-width: 60px;
+        height: 1px;
+        background: var(--accent);
+        opacity: 0.5;
+      }
+
+      .section-heading {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 900;
+        line-height: 1.1;
+        margin-bottom: 3rem;
+      }
+
+      /* SKILLS */
+      #skills {
+        background: var(--ink);
+        color: var(--paper);
+      }
+
+      #skills .section-label {
+        color: var(--accent);
+      }
+
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 2px;
+      }
+
+      .skill-card {
+        background: rgba(255, 255, 255, 0.04);
+        padding: 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        transition: background 0.25s;
+      }
+
+      .skill-card:hover {
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .skill-card-icon {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .skill-card h3 {
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 1rem;
+      }
+
+      .skill-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+      }
+
+      .skill-tag {
+        font-family: "DM Mono", monospace;
+        font-size: 0.68rem;
+        padding: 0.25rem 0.6rem;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: rgba(255, 255, 255, 0.7);
+        letter-spacing: 0.05em;
+      }
+
+      /* PROJECTS */
+      #projects {
+        background: var(--paper);
+      }
+
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2rem;
+      }
+
+      .project-card {
+        background: white;
+        border: 1px solid var(--line);
+        overflow: hidden;
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
+        position: relative;
+      }
+
+      .project-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+      }
+
+      .project-card-header {
+        padding: 2rem 2rem 1rem;
+        border-bottom: 1px solid var(--line);
+        position: relative;
+      }
+
+      .project-num {
+        font-family: "Playfair Display", serif;
+        font-size: 3.5rem;
+        font-weight: 900;
+        font-style: italic;
+        color: var(--line);
+        position: absolute;
+        top: 0.5rem;
+        right: 1.5rem;
+        line-height: 1;
+      }
+
+      .project-tag-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .project-chip {
+        font-family: "DM Mono", monospace;
+        font-size: 0.62rem;
+        padding: 0.2rem 0.55rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .chip-green {
+        background: #e8f5e9;
+        color: var(--accent2);
+      }
+      .chip-red {
+        background: #fdecea;
+        color: var(--accent);
+      }
+      .chip-blue {
+        background: #e3f2fd;
+        color: #1565c0;
+      }
+      .chip-orange {
+        background: #fff3e0;
+        color: #e65100;
+      }
+      .chip-purple {
+        background: #f3e5f5;
+        color: #6a1b9a;
+      }
+
+      .project-card h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+      }
+
+      .project-card-body {
+        padding: 1.25rem 2rem;
+      }
+
+      .project-card p {
+        font-size: 0.88rem;
+        line-height: 1.7;
+        color: #555;
+        margin-bottom: 1.25rem;
+      }
+
+      .project-card-footer {
+        padding: 1rem 2rem;
+        border-top: 1px solid var(--line);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .project-link {
+        font-family: "DM Mono", monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--accent);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        transition: gap 0.2s;
+      }
+
+      .project-link:hover {
+        gap: 0.75rem;
+      }
+
+      /* EXPERIENCE */
+      #experience {
+        background: #f0ebe0;
+      }
+
+      .timeline {
+        position: relative;
+        padding-left: 2rem;
+      }
+
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.5rem;
+        bottom: 0;
+        width: 1px;
+        background: var(--line);
+      }
+
+      .timeline-item {
+        position: relative;
+        padding-bottom: 3rem;
+        padding-left: 2rem;
+      }
+
+      .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: -2rem;
+        top: 0.5rem;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--accent);
+        transform: translateX(-4px);
+      }
+
+      .timeline-date {
+        font-family: "DM Mono", monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.1em;
+        color: var(--accent);
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+      }
+
+      .timeline-item h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 0.2rem;
+      }
+
+      .timeline-org {
+        font-size: 0.85rem;
+        color: var(--muted);
+        font-style: italic;
+        margin-bottom: 1rem;
+      }
+
+      .timeline-bullets {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .timeline-bullets li {
+        font-size: 0.88rem;
+        line-height: 1.6;
+        color: #444;
+        padding-left: 1.2rem;
+        position: relative;
+      }
+
+      .timeline-bullets li::before {
+        content: "—";
+        position: absolute;
+        left: 0;
+        color: var(--accent);
+        font-size: 0.7rem;
+      }
+
+      /* EDUCATION */
+      #education {
+        background: var(--ink);
+        color: var(--paper);
+      }
+      #education .section-heading {
+        color: var(--paper);
+      }
+
+      .edu-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2px;
+      }
+
+      .edu-card {
+        background: rgba(255, 255, 255, 0.04);
+        padding: 2.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+      }
+
+      .edu-year {
+        font-family: "DM Mono", monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.12em;
+        color: var(--accent);
+        text-transform: uppercase;
+        margin-bottom: 0.75rem;
+      }
+
+      .edu-card h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.15rem;
+        font-weight: 700;
+        margin-bottom: 0.4rem;
+        color: var(--paper);
+      }
+
+      .edu-card p {
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      /* CONTACT */
+      #contact {
+        background: var(--paper);
+        text-align: center;
+        padding: 8rem 4rem;
+      }
+
+      .contact-heading {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2.5rem, 5vw, 4.5rem);
+        font-weight: 900;
+        line-height: 1.05;
+        margin-bottom: 1.5rem;
+      }
+
+      .contact-heading em {
+        font-style: italic;
+        color: var(--accent);
+      }
+
+      .contact-sub {
+        font-size: 1rem;
+        color: var(--muted);
+        margin-bottom: 3rem;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.7;
+      }
+
+      .contact-links {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+      }
+
+      .contact-link {
+        font-family: "DM Mono", monospace;
+        font-size: 0.75rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink);
+        text-decoration: none;
+        padding: 0.85rem 2rem;
+        border: 2px solid var(--ink);
+        transition: all 0.25s;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .contact-link:hover {
+        background: var(--ink);
+        color: var(--paper);
+      }
+
+      .contact-link.featured {
+        background: var(--accent);
+        color: white;
+        border-color: var(--accent);
+      }
+
+      .contact-link.featured:hover {
+        background: var(--ink);
+        border-color: var(--ink);
+      }
+
+      /* FOOTER */
+      footer {
+        background: var(--ink);
+        color: rgba(255, 255, 255, 0.35);
+        text-align: center;
+        padding: 2rem 4rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.08em;
+      }
+
+      /* ANIMATIONS */
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* INTERSECTION OBSERVER ANIMATIONS */
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .reveal-delay-1 {
+        transition-delay: 0.1s;
+      }
+      .reveal-delay-2 {
+        transition-delay: 0.2s;
+      }
+      .reveal-delay-3 {
+        transition-delay: 0.3s;
+      }
+      .reveal-delay-4 {
+        transition-delay: 0.4s;
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 768px) {
+        nav {
+          padding: 1rem 1.5rem;
+        }
+        .nav-links {
+          display: none;
+        }
+        .hero {
+          grid-template-columns: 1fr;
+        }
+        .hero-image-col {
+          display: none;
+        }
+        .hero-text {
+          padding: 6rem 1.5rem 3rem;
+        }
+        section {
+          padding: 4rem 1.5rem;
+        }
+        .edu-grid {
+          grid-template-columns: 1fr;
+        }
+        #contact {
+          padding: 5rem 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav>
+      <div class="nav-logo">Yamkela Qwebani</div>
+      <ul class="nav-links">
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="hero-text">
+        <p class="hero-eyebrow">
+          Full-Stack Developer · East London, South Africa
+        </p>
+        <h1 class="hero-name">Yamkela<br /><em>Qwebani</em></h1>
+        <p class="hero-title">Building digital tools that matter</p>
+        <p class="hero-bio">
+          Highly motivated and detail-oriented developer with hands-on
+          experience across front-end and back-end technologies. I've built
+          reporting dashboards, eLearning platforms, automation tools, and
+          mobile applications — spanning multiple languages and real-world
+          deployments.
+        </p>
+        <div class="hero-cta">
+          <a href="#projects" class="btn-primary">View Projects</a>
+          <a href="mailto:Yamkela.codes@gmail.com" class="btn-secondary"
+            >Get in Touch</a
+          >
+        </div>
+        <div class="hero-deco-line">
+          <span>Available for opportunities</span>
+        </div>
+      </div>
+      <div class="hero-image-col">
+        <div class="hero-photo-frame"></div>
+        <div class="hero-photo-wrap">
+          <img src="IMG_9627.png" alt="Yamkela Qwebani" />
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <p class="section-label">What I work with</p>
+      <h2 class="section-heading" style="color: var(--paper)">
+        Technical
+        <em
+          style="
+            font-family: &quot;Playfair Display&quot;, serif;
+            font-style: italic;
+            color: var(--accent);
+          "
+          >Stack</em
+        >
+      </h2>
+      <div class="skills-grid">
+        <div class="skill-card reveal">
+          <div class="skill-card-icon">🌐</div>
+          <h3>Frontend</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">HTML5</span>
+            <span class="skill-tag">CSS3</span>
+            <span class="skill-tag">Bootstrap</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">React</span>
+            <span class="skill-tag">Chart.js</span>
+          </div>
+        </div>
+        <div class="skill-card reveal reveal-delay-1">
+          <div class="skill-card-icon">⚙️</div>
+          <h3>Backend</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">PHP</span>
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">C#</span>
+            <span class="skill-tag">VB.NET</span>
+            <span class="skill-tag">RESTful APIs</span>
+          </div>
+        </div>
+        <div class="skill-card reveal reveal-delay-2">
+          <div class="skill-card-icon">🗄️</div>
+          <h3>Databases</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">MySQL</span>
+            <span class="skill-tag">SQL Server</span>
+            <span class="skill-tag">Relational Design</span>
+            <span class="skill-tag">Query Optimization</span>
+          </div>
+        </div>
+        <div class="skill-card reveal reveal-delay-3">
+          <div class="skill-card-icon">🤖</div>
+          <h3>Automation & Cloud</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Google Apps Script</span>
+            <span class="skill-tag">Google Cloud Console</span>
+            <span class="skill-tag">Google Forms</span>
+            <span class="skill-tag">Google Sheets</span>
+            <span class="skill-tag">Drive API</span>
+          </div>
+        </div>
+        <div class="skill-card reveal reveal-delay-4">
+          <div class="skill-card-icon">📱</div>
+          <h3>Mobile & Other</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Flutter</span>
+            <span class="skill-tag">Moodle LMS</span>
+            <span class="skill-tag">Git</span>
+            <span class="skill-tag">GitHub</span>
+            <span class="skill-tag">Documentation</span>
+          </div>
+        </div>
+        <div class="skill-card reveal reveal-delay-1">
+          <div class="skill-card-icon">🎓</div>
+          <h3>eLearning & CMS</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Moodle Admin</span>
+            <span class="skill-tag">Course Management</span>
+            <span class="skill-tag">LMS Theming</span>
+            <span class="skill-tag">UI Customisation</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <p class="section-label">Selected work</p>
+      <h2 class="section-heading">
+        Projects Across<br /><em
+          style="
+            font-family: &quot;Playfair Display&quot;, serif;
+            font-style: italic;
+          "
+          >Multiple Languages</em
+        >
+      </h2>
+      <div class="projects-grid">
+        <!-- PROJECT 1 -->
+        <div class="project-card reveal">
+          <div class="project-card-header">
+            <span class="project-num">01</span>
+            <div class="project-tag-row">
+              <span class="project-chip chip-blue">JavaScript</span>
+              <span class="project-chip chip-green">HTML/CSS</span>
+              <span class="project-chip chip-orange">GitHub Pages</span>
+            </div>
+            <h3>eLearning Project Tracker</h3>
+          </div>
+          <div class="project-card-body">
+            <p>
+              A live tracking dashboard for the Eastern Cape Department of
+              Education's eLearning initiatives. Enables teams to monitor
+              project status, timelines, and progress across schools — built
+              with clean JavaScript and deployed on GitHub Pages for
+              accessibility.
+            </p>
+          </div>
+          <div class="project-card-footer">
+            <a
+              href="https://elearning-ecdoe.github.io/Project-Tracker/"
+              target="_blank"
+              class="project-link"
+              >View Live ↗</a
+            >
+            <span
+              style="
+                font-family: &quot;DM Mono&quot;, monospace;
+                font-size: 0.65rem;
+                color: var(--muted);
+                letter-spacing: 0.08em;
+              "
+              >ECDOE</span
+            >
+          </div>
+        </div>
+
+        <!-- PROJECT 2 -->
+        <div class="project-card reveal reveal-delay-1">
+          <div class="project-card-header">
+            <span class="project-num">02</span>
+            <div class="project-tag-row">
+              <span class="project-chip chip-green">Google Apps Script</span>
+              <span class="project-chip chip-orange">Google Forms</span>
+              <span class="project-chip chip-blue">Automation</span>
+            </div>
+            <h3>Monitoring & Report Generator</h3>
+          </div>
+          <div class="project-card-body">
+            <p>
+              A fully automated reporting and monitoring tool built with Google
+              Apps Script, integrated with Google Forms and Sheets.
+              Automatically collects field data via Forms, processes it, and
+              generates structured reports — eliminating manual data capturing
+              for the technical team.
+            </p>
+          </div>
+          <div class="project-card-footer">
+            <span
+              class="project-link"
+              style="cursor: default; color: var(--muted)"
+              >Internal Tool</span
+            >
+            <span
+              style="
+                font-family: &quot;DM Mono&quot;, monospace;
+                font-size: 0.65rem;
+                color: var(--muted);
+                letter-spacing: 0.08em;
+              "
+              >ECDOE</span
+            >
+          </div>
+        </div>
+
+        <!-- PROJECT 3 -->
+        <div class="project-card reveal reveal-delay-3">
+          <div class="project-card-header">
+            <span class="project-num">03</span>
+            <div class="project-tag-row">
+              <span class="project-chip chip-purple">PHP</span>
+              <span class="project-chip chip-blue">Moodle LMS</span>
+              <span class="project-chip chip-green">CSS/HTML</span>
+            </div>
+            <h3>Moodle LMS Platform (EC Schools)</h3>
+          </div>
+          <div class="project-card-body">
+            <p>
+              Contributed as both Moodle Administrator and Software Developer on
+              the EC Schools Moodle instance. Managed course content and user
+              roles as Course Manager, and developed custom interface updates —
+              building a tailored skin and UI theme aligned to department
+              branding.
+            </p>
+          </div>
+          <div class="project-card-footer">
+            <a
+              href="https://ecschools.org.za/moodle/skin/index.html"
+              target="_blank"
+              class="project-link"
+              >View Live ↗</a
+            >
+            <span
+              style="
+                font-family: &quot;DM Mono&quot;, monospace;
+                font-size: 0.65rem;
+                color: var(--muted);
+                letter-spacing: 0.08em;
+              "
+              >ECDOE</span
+            >
+          </div>
+        </div>
+
+        <!-- PROJECT 4 -->
+        <div class="project-card reveal reveal-delay-1">
+          <div class="project-card-header">
+            <span class="project-num">04</span>
+            <div class="project-tag-row">
+              <span class="project-chip chip-blue">JavaScript</span>
+              <span class="project-chip chip-orange">Chart.js</span>
+              <span class="project-chip chip-red">PHP</span>
+            </div>
+            <h3>Reporting Dashboards</h3>
+          </div>
+          <div class="project-card-body">
+            <p>
+              Developed dynamic data visualisation dashboards using Chart.js for
+              the Eastern Cape Department of Education. Transformed raw data
+              into interactive graphs and reports, making complex information
+              accessible and actionable for department stakeholders.
+            </p>
+          </div>
+          <div class="project-card-footer">
+            <span
+              class="project-link"
+              style="cursor: default; color: var(--muted)"
+              >Internal Tool</span
+            >
+            <span
+              style="
+                font-family: &quot;DM Mono&quot;, monospace;
+                font-size: 0.65rem;
+                color: var(--muted);
+                letter-spacing: 0.08em;
+              "
+              >ECDOE</span
+            >
+          </div>
+        </div>
+        <!-- PROJECT 5 -->
+        <div class="project-card reveal reveal-delay-2">
+          <div class="project-card-header">
+            <span class="project-num">05</span>
+            <div class="project-tag-row">
+              <span class="project-chip chip-blue">JavaScript</span>
+              <span class="project-chip chip-green">HTML/CSS</span>
+              <span class="project-chip chip-purple">Utility Tool</span>
+            </div>
+            <h3>Spreadsheet Index Calculator</h3>
+          </div>
+          <div class="project-card-body">
+            <p>
+              A developer utility tool that assists technical teams when
+              navigating and working on large spreadsheets. Calculates index
+              positions and coordinates across complex spreadsheet structures,
+              improving efficiency and reducing human error on large-scale data
+              tasks.
+            </p>
+          </div>
+          <div class="project-card-footer">
+            <a
+              href="https://yamkelafada.github.io/Spreadsheet-Index-Calculator/"
+              target="_blank"
+              class="project-link"
+              >View Live ↗</a
+            >
+            <span
+              style="
+                font-family: &quot;DM Mono&quot;, monospace;
+                font-size: 0.65rem;
+                color: var(--muted);
+                letter-spacing: 0.08em;
+              "
+              >Open Source</span
+            >
+          </div>
+        </div>
+
+        <!-- PROJECT 6 -->
+        <div class="project-card reveal reveal-delay-2">
+          <div class="project-card-header">
+            <span class="project-num">06</span>
+            <div class="project-tag-row">
+              <span class="project-chip chip-purple">Flutter</span>
+              <span class="project-chip chip-blue">Dart</span>
+              <span class="project-chip chip-green">Mobile</span>
+            </div>
+            <h3>Butcher App</h3>
+          </div>
+          <div class="project-card-body">
+            <p>
+              Final Year Project — an online food ordering application for a
+              butcher shop, built with Flutter. Enables customers to browse
+              products, place orders, and manage their cart in a clean mobile
+              interface. Demonstrates cross-platform mobile development skills.
+            </p>
+          </div>
+          <div class="project-card-footer">
+            <span
+              class="project-link"
+              style="cursor: default; color: var(--muted)"
+              >Final Year Project</span
+            >
+            <span
+              style="
+                font-family: &quot;DM Mono&quot;, monospace;
+                font-size: 0.65rem;
+                color: var(--muted);
+                letter-spacing: 0.08em;
+              "
+              >WSU</span
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience">
+      <p class="section-label">Career history</p>
+      <h2 class="section-heading">
+        Professional<br /><em
+          style="
+            font-family: &quot;Playfair Display&quot;, serif;
+            font-style: italic;
+          "
+          >Experience</em
+        >
+      </h2>
+      <div class="timeline">
+        <div class="timeline-item reveal">
+          <p class="timeline-date">Jan 2025 — Current</p>
+          <h3>Software Developer Intern</h3>
+          <p class="timeline-org">
+            Eastern Cape Department of Education · Stirling
+          </p>
+          <ul class="timeline-bullets">
+            <li>
+              Created and managed responsive websites using HTML, CSS,
+              Bootstrap, JavaScript, and PHP for departmental use.
+            </li>
+            <li>
+              Introduced dynamic data visualisations via Chart.js to make
+              reporting dashboards significantly more efficient.
+            </li>
+            <li>
+              Automated data management workflows using Google Apps Script,
+              integrated with Google Sheets, Forms, and Drive.
+            </li>
+            <li>
+              Used Google Cloud Console for deployment and monitoring;
+              implemented RESTful APIs for data transmission.
+            </li>
+            <li>
+              Contributed to Moodle LMS as both administrator and developer —
+              managing courses and customising the platform interface.
+            </li>
+          </ul>
+        </div>
+        <div class="timeline-item reveal reveal-delay-1">
+          <p class="timeline-date">2024</p>
+          <h3>Development Software Tutor</h3>
+          <p class="timeline-org">Walter Sisulu University</p>
+          <ul class="timeline-bullets">
+            <li>
+              Assisted students in coding with VB.NET and C#, covering
+              object-oriented programming fundamentals.
+            </li>
+            <li>
+              Supported students with database design, SQL queries, and
+              debugging techniques.
+            </li>
+            <li>
+              Reinforced practical development skills through guided exercises
+              and one-on-one mentoring sessions.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section id="education">
+      <p class="section-label">Academic background</p>
+      <h2 class="section-heading" style="color: var(--paper)">
+        Education &<br /><em
+          style="
+            font-family: &quot;Playfair Display&quot;, serif;
+            font-style: italic;
+            color: var(--accent);
+          "
+          >Qualifications</em
+        >
+      </h2>
+      <div class="edu-grid">
+        <div class="edu-card reveal">
+          <p class="edu-year">2024 · NQF Level 7</p>
+          <h3>Advanced Diploma in ICT</h3>
+          <p>
+            Walter Sisulu University<br />Specialising in Application
+            Development
+          </p>
+        </div>
+        <div class="edu-card reveal reveal-delay-1">
+          <p class="edu-year">2023 · NQF Level 6</p>
+          <h3>Diploma in ICT</h3>
+          <p>
+            Walter Sisulu University<br />Specialising in Application
+            Development
+          </p>
+        </div>
+        <div class="edu-card reveal reveal-delay-1">
+          <p class="edu-year">2018 · NQF Level 4</p>
+          <h3>Grade 12</h3>
+          <p>Nongeke Senior Secondary School <br />Stream: Science</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <p class="section-label" style="justify-content: center">Let's connect</p>
+      <h2 class="contact-heading reveal">
+        Ready to build<br /><em>something great?</em>
+      </h2>
+      <p class="contact-sub reveal reveal-delay-1">
+        I'm open to Software Development roles, and collaborative opportunities.
+        Let's talk.
+      </p>
+      <div class="contact-links reveal reveal-delay-2">
+        <a
+          href="mailto:Yamkela.Qwebani@ecdoe.gov.za"
+          class="contact-link featured"
+          >✉ Email Me</a
+        >
+        <a
+          href="https://linkedin.com/in/yamkela-qwebani"
+          target="_blank"
+          class="contact-link"
+          >LinkedIn ↗</a
+        >
+        <a
+          href="https://github.com/YamkelaFada"
+          target="_blank"
+          class="contact-link"
+          >GitHub ↗</a
+        >
+        <a href="tel:0691725708" class="contact-link">069 172 5708</a>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>
+        © 2025 Yamkela Qwebani · Full-Stack Developer · East London, South
+        Africa
+      </p>
+    </footer>
+
+    <script>
+      // Intersection Observer for reveal animations
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
+
+      document
+        .querySelectorAll(".reveal")
+        .forEach((el) => observer.observe(el));
+
+      // Smooth active nav link
+      const sections = document.querySelectorAll("section[id]");
+      const navLinks = document.querySelectorAll(".nav-links a");
+
+      window.addEventListener("scroll", () => {
+        let current = "";
+        sections.forEach((section) => {
+          if (window.scrollY >= section.offsetTop - 120) {
+            current = section.getAttribute("id");
+          }
+        });
+        navLinks.forEach((link) => {
+          link.style.color =
+            link.getAttribute("href") === `#${current}` ? "var(--accent)" : "";
+        });
+      });
+    </script>
+  </body>
+</html>
